@@ -1,0 +1,81 @@
+.my-ch {
+  max-width: 720px;
+  padding-top: 8px;
+}
+
+.my-ch h1 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.my-ch__lead {
+  color: #606060;
+  margin: 0 0 24px;
+}
+
+.my-ch__create {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.my-ch__create h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+}
+
+.my-ch__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.my-ch__input,
+.my-ch__textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.my-ch__btn {
+  align-self: flex-start;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 20px;
+  border: none;
+  background: #065fd4;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.my-ch__err {
+  color: #c62828;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.my-ch__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.my-ch__list li {
+  margin-bottom: 8px;
+}
+
+.my-ch__list a {
+  color: #065fd4;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.my-ch__list a:hover {
+  text-decoration: underline;
+}

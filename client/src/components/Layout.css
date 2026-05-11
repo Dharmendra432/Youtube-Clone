@@ -1,0 +1,37 @@
+.app-shell {
+  min-height: 100vh;
+  background: #f9f9f9;
+}
+
+.app-body {
+  display: flex;
+  padding-top: 56px;
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  padding: 0 24px 32px;
+  transition: margin-left 0.15s ease;
+}
+
+@media (min-width: 769px) {
+  .main-area--with-sidebar {
+    margin-left: 240px;
+  }
+
+  .main-area--sidebar-narrow {
+    margin-left: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-area {
+    padding: 0 12px 24px;
+  }
+
+  .main-area--with-sidebar,
+  .main-area--sidebar-narrow {
+    margin-left: 0;
+  }
+}

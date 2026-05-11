@@ -1,0 +1,126 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f9f9f9;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #0f0f0f;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.auth-logo__play {
+  width: 28px;
+  height: 20px;
+  background: #ff0000;
+  border-radius: 4px;
+  position: relative;
+}
+
+.auth-logo__play::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+}
+
+.auth-card h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.auth-lead {
+  margin: 0 0 24px;
+  color: #606060;
+  font-size: 14px;
+}
+
+.auth-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.auth-input {
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 15px;
+}
+
+.auth-input:focus {
+  outline: 2px solid #065fd4;
+  border-color: #065fd4;
+}
+
+.auth-submit {
+  width: 100%;
+  height: 44px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 24px;
+  background: #065fd4;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-submit:hover {
+  background: #0549a8;
+}
+
+.auth-footer {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: #606060;
+}
+
+.auth-footer a {
+  color: #065fd4;
+  text-decoration: none;
+}
+
+.auth-error {
+  background: #fdecea;
+  color: #c62828;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.auth-error-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: #c62828;
+  font-size: 14px;
+}
