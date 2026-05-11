@@ -54,23 +54,39 @@ export function Watch() {
       setErr('Sign in to comment.');
       return;
     }
+    const trimmed = text.trim();
+    if (!trimmed) return;
     setErr('');
-    await api.post(`/api/videos/${id}/comments`, { text });
-    setText('');
-    loadComments();
+    try {
+      await api.post(`/api/videos/${id}/comments`, { text: trimmed });
+      setText('');
+      await loadComments();
+    } catch (err) {
+      setErr(err.response?.data?.message || 'Unable to post comment.');
+    }
   }
 
   async function saveEdit(e) {
     e.preventDefault();
-    await api.put(`/api/videos/${id}/comments/${editId}`, { text: editText });
-    setEditId(null);
-    setEditText('');
-    loadComments();
+    const trimmed = editText.trim();
+    if (!trimmed) return;
+    try {
+      await api.put(`/api/videos/${id}/comments/${editId}`, { text: trimmed });
+      setEditId(null);
+      setEditText('');
+      await loadComments();
+    } catch (err) {
+      setErr(err.response?.data?.message || 'Unable to edit comment.');
+    }
   }
 
   async function removeComment(cid) {
-    await api.delete(`/api/videos/${id}/comments/${cid}`);
-    loadComments();
+    try {
+      await api.delete(`/api/videos/${id}/comments/${cid}`);
+      await loadComments();
+    } catch (err) {
+      setErr(err.response?.data?.message || 'Unable to delete comment.');
+    }
   }
 
   if (!video) {

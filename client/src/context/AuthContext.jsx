@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(TOKEN_KEY);
     setAuthToken(null);
     setUser(null);
+    setLoading(false);
   }, []);
 
   const refreshUser = useCallback(async () => {

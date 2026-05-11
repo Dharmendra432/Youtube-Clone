@@ -68,7 +68,14 @@ export function Header({ onMenuClick }) {
               <span className="yt-username yt-hide-mobile">{user?.username}</span>
               <div className="yt-profile-menu">
                 <span className="yt-profile-menu__name">{user?.username}</span>
-                <button type="button" className="yt-link-btn" onClick={() => logout()}>
+                <button
+                  type="button"
+                  className="yt-link-btn"
+                  onClick={() => {
+                    logout();
+                    navigate('/', { replace: true });
+                  }}
+                >
                   Sign out
                 </button>
               </div>

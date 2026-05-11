@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import videoRoutes from './routes/videoRoutes.js';
@@ -43,6 +44,21 @@ if (!process.env.JWT_SECRET) {
 }
 
 await connectDB(mongoUri);
+
+try {
+  const db = mongoose.connection.db;
+  const collection = db.collection('comments');
+  const hasIndex = await collection.indexExists('commentId_1');
+  if (hasIndex) {
+    await collection.dropIndex('commentId_1');
+    console.log('Dropped stale comments.commentId_1 index');
+  }
+} catch (error) {
+  if (error.codeName !== 'NamespaceNotFound') {
+    console.error('Index cleanup error:', error.message);
+  }
+}
+
 app.listen(PORT, () => {
   console.log(`API listening on http://localhost:${PORT}`);
 });
