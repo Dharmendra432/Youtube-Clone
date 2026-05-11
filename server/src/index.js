@@ -47,16 +47,27 @@ await connectDB(mongoUri);
 
 try {
   const db = mongoose.connection.db;
-  const collection = db.collection('comments');
-  const hasIndex = await collection.indexExists('commentId_1');
-  if (hasIndex) {
-    await collection.dropIndex('commentId_1');
-    console.log('Dropped stale comments.commentId_1 index');
+  const cleanupTargets = [
+    { collection: 'comments', index: 'commentId_1' },
+    { collection: 'channels', index: 'channelId_1' },
+  ];
+
+  for (const { collection: collectionName, index } of cleanupTargets) {
+    try {
+      const collection = db.collection(collectionName);
+      const hasIndex = await collection.indexExists(index);
+      if (hasIndex) {
+        await collection.dropIndex(index);
+        console.log(`Dropped stale ${collectionName}.${index} index`);
+      }
+    } catch (innerError) {
+      if (innerError.codeName && innerError.codeName !== 'NamespaceNotFound') {
+        console.error(`Index cleanup error for ${collectionName}.${index}:`, innerError.message);
+      }
+    }
   }
 } catch (error) {
-  if (error.codeName !== 'NamespaceNotFound') {
-    console.error('Index cleanup error:', error.message);
-  }
+  console.error('Index cleanup failed:', error.message);
 }
 
 app.listen(PORT, () => {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
+import { useAuth } from '../context/AuthContext.jsx';
 import './MyChannel.css';
 
 export function MyChannel() {
+  const { loading } = useAuth();
   const [channels, setChannels] = useState([]);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -15,8 +17,10 @@ export function MyChannel() {
   }
 
   useEffect(() => {
-    load().catch(() => setChannels([]));
-  }, []);
+    if (!loading) {
+      load().catch(() => setChannels([]));
+    }
+  }, [loading]);
 
   async function create(e) {
     e.preventDefault();
@@ -29,6 +33,10 @@ export function MyChannel() {
     } catch (ex) {
       setErr(ex.response?.data?.message || 'Could not create channel');
     }
+  }
+
+  if (loading) {
+    return <p className="yt-muted">Loading…</p>;
   }
 
   return (
