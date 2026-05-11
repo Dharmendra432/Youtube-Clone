@@ -1,8 +1,11 @@
 # YouTube Clone (MERN)
 
+
 A full-stack **YouTube-style** video platform built for a capstone-style MERN assignment: **MongoDB**, **Express** (ES modules), **React** (Vite), and **Node.js**, with **JWT** authentication and REST APIs for users, channels, videos, and comments.
 
 ---
+
+## GitHub Link :  https://github.com/Dharmendra432/Youtube-Clone
 
 ## What this project includes
 
