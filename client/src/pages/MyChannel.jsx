@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import './MyChannel.css';
 
 export function MyChannel() {
   const { loading } = useAuth();
+  const navigate = useNavigate();
   const [channels, setChannels] = useState([]);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -26,10 +27,10 @@ export function MyChannel() {
     e.preventDefault();
     setErr('');
     try {
-      await api.post('/api/channels', { channelName: name, description: desc });
+      const { data: newChannel } = await api.post('/api/channels', { channelName: name, description: desc });
       setName('');
       setDesc('');
-      load();
+      navigate(`/channel/${newChannel.id}`);
     } catch (ex) {
       setErr(ex.response?.data?.message || 'Could not create channel');
     }

@@ -16,6 +16,7 @@ export function ChannelPage() {
   const { user } = useAuth();
   const [data, setData] = useState(null);
   const [editing, setEditing] = useState(null);
+  const [err, setErr] = useState('');
 
   const [form, setForm] = useState({
     title: '',
@@ -39,14 +40,19 @@ export function ChannelPage() {
 
   async function addVideo(e) {
     e.preventDefault();
-    await api.post('/api/videos', { channelId: id, ...form });
-    setForm((f) => ({
-      ...f,
-      title: '',
-      description: '',
-      duration: '10:00',
-    }));
-    load();
+    setErr('');
+    try {
+      await api.post('/api/videos', { channelId: id, ...form });
+      setForm((f) => ({
+        ...f,
+        title: '',
+        description: '',
+        duration: '10:00',
+      }));
+      load();
+    } catch (ex) {
+      setErr(ex.response?.data?.message || 'Could not publish video');
+    }
   }
 
   async function updateVideo(e) {
@@ -89,6 +95,7 @@ export function ChannelPage() {
       {isOwner && (
         <section className="ch-page__panel">
           <h2>Upload video</h2>
+          {err && <div className="ch-page__err">{err}</div>}
           <form className="ch-page__grid-form" onSubmit={addVideo}>
             <input
               placeholder="Title"
