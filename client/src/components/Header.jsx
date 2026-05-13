@@ -1,11 +1,13 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import './Header.css';
 
 export function Header({ onMenuClick }) {
   const { user, isAuthenticated, logout } = useAuth();
   const [q, setQ] = useState('');
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -13,6 +15,21 @@ export function Header({ onMenuClick }) {
     const p = new URLSearchParams(location.search);
     setQ(p.get('search') || '');
   }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    setProfileMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (profileMenuOpen && profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileMenuOpen]);
 
   function onSearch(e) {
     e.preventDefault();
@@ -63,16 +80,38 @@ export function Header({ onMenuClick }) {
               <BellIcon />
               <span className="yt-badge">9+</span>
             </button>
-            <div className="yt-profile-wrap">
-              <img src={user?.avatar} alt="" className="yt-avatar" width={32} height={32} />
-              <span className="yt-username yt-hide-mobile">{user?.username}</span>
-              <div className="yt-profile-menu">
-                <span className="yt-profile-menu__name">{user?.username}</span>
+            <div
+              className="yt-profile-wrap"
+              ref={profileRef}
+              onMouseEnter={() => setProfileMenuOpen(true)}
+              onMouseLeave={() => setProfileMenuOpen(false)}
+            >
+              <button
+                type="button"
+                className="yt-profile-trigger"
+                onClick={() => setProfileMenuOpen((open) => !open)}
+                aria-label="Open profile menu"
+                aria-expanded={profileMenuOpen}
+              >
+                <img src={user?.avatar} alt="" className="yt-avatar" width={32} height={32} />
+                <span className="yt-username yt-hide-mobile">{user?.username}</span>
+                <span className="yt-profile-arrow">▾</span>
+              </button>
+              <div className={`yt-profile-menu ${profileMenuOpen ? 'yt-profile-menu--open' : ''}`}>
+                <div className="yt-profile-menu__header">
+                  <img src={user?.avatar} alt="" className="yt-profile-menu__avatar" width={40} height={40} />
+                  <div>
+                    <p className="yt-profile-menu__name">{user?.username}</p>
+                    <p className="yt-profile-menu__email">{user?.email}</p>
+                  </div>
+                </div>
+                <div className="yt-profile-menu__divider" />
                 <button
                   type="button"
-                  className="yt-link-btn"
+                  className="yt-profile-menu__item"
                   onClick={() => {
                     logout();
+                    setProfileMenuOpen(false);
                     navigate('/', { replace: true });
                   }}
                 >

@@ -50,6 +50,7 @@ try {
   const cleanupTargets = [
     { collection: 'comments', index: 'commentId_1' },
     { collection: 'channels', index: 'channelId_1' },
+    { collection: 'videos', index: 'videoId_1' },
   ];
 
   for (const { collection: collectionName, index } of cleanupTargets) {
